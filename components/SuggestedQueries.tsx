@@ -14,12 +14,12 @@ export const SuggestedQueries: React.FC<SuggestedQueriesProps> = ({ onSelectQuer
   ];
 
   return (
-    <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+    <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide w-full">
       {suggestions.map((s, idx) => (
         <button
           key={idx}
           onClick={() => onSelectQuery(s.text)}
-          className={`flex-shrink-0 flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium border border-transparent transition-colors ${s.color}`}
+          className={`flex-shrink-0 flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium border border-transparent transition-colors whitespace-nowrap ${s.color}`}
         >
           {s.icon}
           {s.text}

@@ -20,7 +20,10 @@ export default function App() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // Increased delay slightly to ensure layout is fully recalculated
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }, 150);
   };
 
   useEffect(() => {
@@ -77,7 +80,8 @@ export default function App() {
     <div className="flex flex-col h-full bg-slate-50">
       <Header />
 
-      <main className="flex-1 overflow-y-auto p-4 md:p-6 pb-32 max-w-5xl mx-auto w-full">
+      {/* Increased pb-48 to pb-72 (approx 288px) to handle tall footers on small screens */}
+      <main className="flex-1 overflow-y-auto p-4 md:p-6 pb-72 max-w-5xl mx-auto w-full scroll-smooth">
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center p-8 opacity-60">
             <ShoppingBag size={64} className="mb-4 text-indigo-500" />
@@ -103,13 +107,14 @@ export default function App() {
                 </div>
               </div>
             )}
-            <div ref={messagesEndRef} />
+            {/* Added extra height spacer at the end */}
+            <div ref={messagesEndRef} className="h-8" />
           </div>
         )}
       </main>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t border-slate-200 p-4">
-        <div className="max-w-4xl mx-auto space-y-4">
+      <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-200 p-4 pb-6 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-20">
+        <div className="max-w-4xl mx-auto space-y-3">
            {messages.length < 3 && (
             <SuggestedQueries onSelectQuery={handleSendMessage} />
           )}
